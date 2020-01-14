@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Icons\baseline_close_black_18dp.png" />
+    <None Remove="Resources\Icons\baseline_create_black_18dp.png" />
+    <None Remove="Resources\Icons\baseline_folder_open_black_18dp.png" />
+    <None Remove="Resources\Icons\baseline_redo_black_18dp.png" />
+    <None Remove="Resources\Icons\baseline_save_black_18dp.png" />
+    <None Remove="Resources\Icons\baseline_undo_black_18dp.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Icons\baseline_close_black_18dp.png" />
+    <Resource Include="Resources\Icons\baseline_create_black_18dp.png" />
+    <Resource Include="Resources\Icons\baseline_folder_open_black_18dp.png" />
+    <Resource Include="Resources\Icons\baseline_redo_black_18dp.png" />
+    <Resource Include="Resources\Icons\baseline_save_black_18dp.png" />
+    <Resource Include="Resources\Icons\baseline_undo_black_18dp.png" />
+  </ItemGroup>
+
+</Project>
