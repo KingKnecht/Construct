@@ -5,6 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Construct.WpfViews"
+        xmlns:t="http://schemas.telerik.com/2008/xaml/presentation"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <DockPanel LastChildFill="True">
@@ -13,8 +15,8 @@
             <Ribbon.QuickAccessToolBar>
                 <RibbonQuickAccessToolBar>
                     <RibbonButton Label="Save" SmallImageSource="Resources/Icons/baseline_save_black_18dp.png"/>
-                    <RibbonButton Label="Undo" SmallImageSource="Resources/Icons/baseline_undo_black_18dp.png"/>
-                    <RibbonButton Label="Redo" SmallImageSource="Resources/Icons/baseline_redo_black_18dp.png"/>
+                    <RibbonButton Label="Undo" Command="{Binding Undo}" SmallImageSource="Resources/Icons/baseline_undo_black_18dp.png" />
+                    <RibbonButton Label="Redo" Command="{Binding Redo}" SmallImageSource="Resources/Icons/baseline_redo_black_18dp.png"/>
                 </RibbonQuickAccessToolBar>
             </Ribbon.QuickAccessToolBar>
 
@@ -76,8 +78,33 @@
         </ribbon:Ribbon>
 
         <Grid VerticalAlignment="Stretch">
-            <!-- Placeholder for content -->
-            <TabControl x:Name="SheetTabControl" ItemsSource="{Binding Sheets}" SelectedValuePath="Id" SelectedValue="{Binding SelectedSheet}" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="60*"/>
+                <ColumnDefinition Width="20*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox Grid.Column="0" ItemsSource="{Binding Sheets}" SelectedValuePath="Id" SelectedValue="{Binding SelectedSheet}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Background="Transparent">
+                                                     
+                            <CheckBox IsChecked="{Binding IsOpen, Mode=OneWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Checked">
+                                        <i:InvokeCommandAction Command="{Binding OpenSheet}"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="Unchecked">
+                                        <i:InvokeCommandAction Command="{Binding CloseSheet}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </CheckBox>
+
+                            <Label Content="{Binding Name}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TabControl Grid.Column="1" x:Name="SheetTabControl" ItemsSource="{Binding OpenSheets}" SelectedValuePath="Id" SelectedValue="{Binding SelectedSheet}" VerticalAlignment="Stretch">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -89,10 +116,16 @@
                 <TabControl.ContentTemplate>
                     <DataTemplate>
                         <TextBlock>Fill me!</TextBlock>
-                        <!--<wpf:ChromiumWebBrowser x:Name="Browser" Address="www.google.com"/>-->
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
+            <ListBox Grid.Column="2" ItemsSource="{Binding History}"  SelectedValuePath="Id" SelectedValue="{Binding SelectedUndoEntry}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding UndoEntry}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
         </Grid>
     </DockPanel>
