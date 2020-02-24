@@ -39,7 +39,7 @@ module UndoHistory =
   let history undoList = undoList.Future @ undoList.Present :: undoList.Past
   let setPresent m undoList =  { undoList with Future = (history undoList) |> List.takeWhile (fun m' -> m' <> m) 
                                                Present = m
-                                               Past = List.rev (history undoList) |> List.takeWhile (fun m' -> m' <> m) }
+                                               Past = List.rev (history undoList) |> List.takeWhile (fun m' -> m' <> m) |> List.rev }
                                  
   let movePresentToPast undoList = {undoList with Past = undoList.Present::undoList.Past}
   
